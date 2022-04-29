@@ -21,7 +21,7 @@ screen.onkey(player.go_up, "Up")
 game_is_running = True
 while game_is_running:
     time.sleep(0.1)
-    manager.generate_car()
+    manager.create_car()
 
     # # Bounce on Y
     # if ball.ycor() > 280 or ball.ycor() < -280:
