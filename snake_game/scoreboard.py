@@ -5,15 +5,17 @@ ALIGNMENT = "center"
 
 class Scoreboard(Turtle):
 
-    score = 0
-
     def __init__(self):
         super().__init__()
+        self.score = 0
+        with open('data.txt') as f:
+            self.high_score = int(f.read())
+            f.close();
         self.color("white")
         self.hideturtle()
         self.penup()
         self.goto(0, 270)
-        self.write(arg=f"Score: {self.score}", move=False, align=ALIGNMENT, font=FONT)
+        self.update_scoreboard()
 
 
     def increase_score(self):
@@ -22,7 +24,15 @@ class Scoreboard(Turtle):
 
     def update_scoreboard(self):
         self.clear()
-        self.write(arg=f"Score: {self.score}", move=False, align="center", font=("Arial", 24, "normal"))
+        self.write(arg=f"Score: {self.score} High Score: {self.high_score}", move=False, align=ALIGNMENT, font=FONT)
+
+    def reset(self):
+        if self.score > self.high_score:
+            self.high_score = self.score
+            with open('data.txt', mode="w") as f:
+                f.write(f"{self.high_score}")
+        self.score = 0
+        self.update_scoreboard()
 
     def clear_score(self):
         self.score = 0
@@ -31,3 +41,4 @@ class Scoreboard(Turtle):
     def game_over(self):
         self.goto(0, 0)
         self.write(arg=f"GAME OVER", move=False, align=ALIGNMENT, font=FONT)
+        self.reset()
